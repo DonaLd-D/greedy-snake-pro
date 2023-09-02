@@ -3,7 +3,7 @@ const arr=[]
 export class GameObj{
   constructor(){
     arr.push(this)
-    this.cur=0
+    this.timeStamp=0
     this.started=false
   }
   start(){
@@ -18,7 +18,7 @@ export class GameObj{
   destroy(){
     this.before_destroy()
     for(let i in arr){
-      if(arr[i]==this) arr.slice(i)
+      if(arr[i]==this) arr.splice(i)
       break
     }
   }
@@ -32,7 +32,7 @@ const step=(timeStamp)=>{
       gameObj.started=true
       gameObj.start()
     }else{
-      gameObj.cur=timeStamp-last_timeStamp
+      gameObj.timeStamp=timeStamp-last_timeStamp
       gameObj.update()
     }
   }

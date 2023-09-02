@@ -5,14 +5,15 @@ export class Wall extends GameObj{
     super()
     this.r=r
     this.c=c
-    this.ctx=GameMap.ctx
-    this.edge=GameMap.edge
+    this.gm=GameMap
   }
   update(){
     this.render()
   }
   render(){
-    this.ctx.fillStyle='#ff0'
-    this.ctx.fillRect(this.r*this.edge,this.c*this.edge,this.edge,this.edge)
+    const edge=this.gm.edge
+    const ctx=this.gm.ctx
+    ctx.fillStyle='#ff0'
+    ctx.fillRect(this.r*edge,this.c*edge,edge,edge)
   }
 }

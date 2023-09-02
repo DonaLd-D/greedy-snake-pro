@@ -7,7 +7,7 @@ export class GameMap extends GameObj{
     this.parent=parent
     this.ctx=ctx
     this.edge=0
-    this.total=13
+    this.total=20
     this.cnt={}
     this.walls=[]
   }
@@ -29,7 +29,7 @@ export class GameMap extends GameObj{
     }
   }
   update(){
-    this.edge=Math.min(this.parent.clientWidth/13,this.parent.clientHeight/13)
+    this.edge=parseInt(Math.min(this.parent.clientWidth/13,this.parent.clientHeight/13))
     this.ctx.canvas.width=this.edge*13
     this.ctx.canvas.height=this.edge*13
     this.render()
