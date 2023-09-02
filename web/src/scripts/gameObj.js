@@ -17,8 +17,8 @@ export class GameObj{
   }
   destroy(){
     this.before_destroy()
-    for(let [i,obj] of arr.entries()){
-      if(obj==this) arr.slice(i)
+    for(let i in arr){
+      if(arr[i]==this) arr.slice(i)
       break
     }
   }
