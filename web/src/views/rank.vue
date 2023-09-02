@@ -1,13 +1,12 @@
 <template>
-  <div>
-    rank
-  </div>
+  <container>
+      rank
+  </container>
+  
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import container from '@/components/container.vue'
 </script>
 
 <style>

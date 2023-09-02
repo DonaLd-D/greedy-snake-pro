@@ -1,13 +1,12 @@
 <template>
-  <div>
-    404
-  </div>
+  <container>
+      404
+  </container>
+  
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import container from '@/components/container.vue'
 </script>
 
 <style>

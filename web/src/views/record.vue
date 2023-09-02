@@ -1,13 +1,12 @@
 <template>
-  <div>
-    record
-  </div>
+  <container>
+      record
+  </container>
+  
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import container from '@/components/container.vue'
 </script>
 
 <style>
