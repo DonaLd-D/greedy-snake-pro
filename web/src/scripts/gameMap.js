@@ -1,4 +1,5 @@
 import { GameObj } from "./gameObj";
+import { Snake } from "./snake";
 import {Wall} from './wall.js'
 
 export class GameMap extends GameObj{
@@ -13,6 +14,8 @@ export class GameMap extends GameObj{
 
     this.bricks=20
     this.walls=[]
+    
+    this.snakes=[new Snake({id:0,color:'red',r:this.rows-2,c:1},this),new Snake({id:1,color:'blue',r:1,c:this.cols-2},this)]
   }
   check(mat,sx,sy,tx,ty){
     if(sx==tx&&sy==ty) return true
