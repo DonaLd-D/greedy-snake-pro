@@ -1,6 +1,6 @@
 <template>
   <div class="main" ref="parent">
-    <canvas ref="canvas"/>
+      <canvas ref="canvas" tabindex="0"/>
   </div>
 </template>
 

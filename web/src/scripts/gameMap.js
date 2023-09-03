@@ -70,10 +70,23 @@ export class GameMap extends GameObj{
     }
     return true
   }
+  //监听键盘输入事件
+  handle_events(){
+    this.ctx.canvas.focus()
+    const [snake0,snake1]=this.snakes
+    this.ctx.canvas.addEventListener('keydown',e=>{
+      const t=e.key
+      const k2i0={'w':0,'d':1,'s':2,'a':3}
+      const k2i1={'ArrowUp':0,"ArrowRight":1,"ArrowDown":2,"ArrowLeft":3}
+      if(t in k2i0) snake0.set_direction(k2i0[t])
+      else snake1.set_direction(k2i1[t])
+    })
+  }
   start(){
     for(let i=0;i<1000;i++){
       if(this.build_walls()) break
     }
+    this.handle_events()
   }
   update_size(){
     //计算边长
@@ -81,8 +94,21 @@ export class GameMap extends GameObj{
     this.ctx.canvas.width=this.edge*this.rows
     this.ctx.canvas.height=this.edge*this.cols
   }
+  //判断蛇是否可以走动
+  check_snake(){
+    for(let snake of this.snakes){
+      if(snake.status!='idle') return false
+      if(snake.direction==-1) return false
+    }
+    return true
+  }
   update(){
     this.update_size()
+    if(true){
+      for(let snake of this.snakes){
+        if(snake.direction!=-1) snake.handle_next()
+      }
+    }
     this.render()
   }
   render(){
