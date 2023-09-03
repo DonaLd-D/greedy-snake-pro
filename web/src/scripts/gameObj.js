@@ -24,9 +24,10 @@ export class GameObj{
   }
 }
 
-let last_timeStamp=null
+let last_timeStamp
 
 const step=(timeStamp)=>{
+  console.log(timeStamp);
   for(let gameObj of arr){
     if(!gameObj.started){
       gameObj.started=true
