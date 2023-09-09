@@ -23,9 +23,13 @@ export class Snake extends GameObj{
     const dx=[-1,0,1,0],dy=[0,1,0,-1]
     const d=this.direction
     const head=new Cell(this.cells[0].r+dx[d],this.cells[0].c+dy[d])
-    this.cells.unshift(head)
-    if(this.cells.length>=6){
-      this.cells.pop()
+    if(!this.gm.check_valid(head)){
+      this.status='die';
+    }else{
+      this.cells.unshift(head)
+      if(this.cells.length>6){
+        this.cells.pop()
+      }
     }
     this.direction=-1
   }
@@ -36,7 +40,19 @@ export class Snake extends GameObj{
     const edge=this.gm.edge
     const ctx=this.gm.ctx
     ctx.fillStyle=this.color
-    for(let cs of this.cells){
+    if(this.status=='die'){
+      ctx.fillStyle="#fff";
+    }
+    for(let i=0;i<this.cells.length;i++){
+      if(this.status!="die"){
+        if(i==0){
+          if(this.color=="#f00") ctx.fillStyle="#f90";
+          else ctx.fillStyle="#09f";
+        }else{
+          ctx.fillStyle=this.color
+        }
+      }
+      let cs=this.cells[i];
       ctx.beginPath()
       ctx.arc(cs.x*edge,cs.y*edge,edge/2,0,Math.PI*2)
       ctx.fill()

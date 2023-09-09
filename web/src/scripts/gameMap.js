@@ -15,7 +15,7 @@ export class GameMap extends GameObj{
     this.bricks=20
     this.walls=[]
     
-    this.snakes=[new Snake({id:0,color:'red',r:this.rows-2,c:1},this),new Snake({id:1,color:'blue',r:1,c:this.cols-2},this)]
+    this.snakes=[new Snake({id:0,color:'#f00',r:this.rows-2,c:1},this),new Snake({id:1,color:'#00f',r:1,c:this.cols-2},this)]
   }
   check(mat,sx,sy,tx,ty){
     if(sx==tx&&sy==ty) return true
@@ -82,6 +82,24 @@ export class GameMap extends GameObj{
       else snake1.set_direction(k2i1[t])
     })
   }
+  check_ready(){ //检测蛇是否可以移动
+    for(let snake of this.snakes){
+      if(snake.status!="idle") return false;
+    }
+    return true;
+  }
+  check_valid(cell){ //检测蛇是否死亡
+    for(let wall of this.walls){
+      if(cell.r==wall.r&&cell.c==wall.c) return false;
+    }
+    for(let snake of this.snakes){
+      let len=snake.cells.length;
+      for(let i=0;i<(len>=5?len-1:len);i++){
+        if(cell.r==snake.cells[i].r&&cell.c==snake.cells[i].c) return false;
+      }
+    }
+    return true;
+  }
   start(){
     for(let i=0;i<1000;i++){
       if(this.build_walls()) break
@@ -94,17 +112,9 @@ export class GameMap extends GameObj{
     this.ctx.canvas.width=this.edge*this.rows
     this.ctx.canvas.height=this.edge*this.cols
   }
-  //判断蛇是否可以走动
-  check_snake(){
-    for(let snake of this.snakes){
-      if(snake.status!='idle') return false
-      if(snake.direction==-1) return false
-    }
-    return true
-  }
   update(){
     this.update_size()
-    if(true){
+    if(this.check_ready()){
       for(let snake of this.snakes){
         if(snake.direction!=-1) snake.handle_next()
       }
