@@ -13,7 +13,7 @@ public class BackendApplication {
 
         SpringApplication.run(BackendApplication.class, args);
     }
-    @RequestMapping("/index")
+    @RequestMapping("/")
     public static String index(){
         return "index.html";
     }
