@@ -14,11 +14,23 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      imports:['vue','vue-router'],
+      imports:['vue','vue-router','pinia'],
       resolvers: [ElementPlusResolver()],
     }),
     Components({
       resolvers: [ElementPlusResolver()],
     }),
   ],
+  server: {
+    port: 8080,
+    host: true,
+    open: true,
+    proxy: {
+      '/dev-api': {
+        target: 'http://localhost:3030',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/dev-api/, '')
+      }
+    }
+  },
 })

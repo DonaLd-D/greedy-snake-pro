@@ -5,10 +5,6 @@
 
 <script setup>
 import navbar from "./components/navbar.vue"
-import { login } from '@/api/user.js'
-login("djh", "pdjh").then(res => {
-  console.log(res)
-})
 
 </script>
 

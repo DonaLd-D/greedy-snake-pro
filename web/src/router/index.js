@@ -19,6 +19,14 @@ export const routes = [
     component: () => import('@/views/rank.vue'),
   },
   {
+    path: '/login',
+    component: () => import('@/views/login.vue'),
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register.vue'),
+  },
+  {
     path: '/user',
     component: () => import('@/views/user.vue'),
   },

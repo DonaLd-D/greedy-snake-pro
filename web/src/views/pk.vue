@@ -19,7 +19,7 @@ onMounted(()=>{
     width: 60vw;
     height: 70vh;
     margin: 2em auto;
-    background: #fff;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
