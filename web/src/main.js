@@ -12,4 +12,6 @@ for (const key in ElementPlusIconsVue){
   app.component(key, ElementPlusIconsVue[key])
 }
 
+import './permission.js'
+
 app.mount('#app')
