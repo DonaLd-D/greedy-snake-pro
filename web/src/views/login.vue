@@ -39,6 +39,7 @@ const submitForm = () => {
     if (valid) {
       userStore.toLogin(form.username, form.password)
     } else {
+      ElMessage.error('Oops,error submit!')
       console.log('error submit!', fields)
     }
   })
