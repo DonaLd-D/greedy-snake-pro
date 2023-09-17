@@ -27,8 +27,8 @@
               </el-dropdown>
             </div>
             <div v-else>
-              <el-button type="primary" plain size="small" @click="$router.push({ path: '/login' })">登录</el-button>
-              <el-button type="primary" plain size="small" @click="$router.push({ path: '/register' })">注册</el-button>
+                    <span @click="$router.push({ path: '/login' })" style="margin: .5em;">登录</span>
+                    <span @click="$router.push({ path: '/register' })">注册</span>
             </div>
         </el-menu-item>
       </el-menu>

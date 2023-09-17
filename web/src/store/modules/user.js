@@ -12,7 +12,6 @@ const useUserStore = defineStore(
       toLogin(username,password){
         login(username,password).then(res=>{
           sessionStorage.setItem("token",res.token)
-          this.toGetInfo()
           router.push({path:"/"})
         })
       },

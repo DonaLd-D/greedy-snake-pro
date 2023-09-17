@@ -16,24 +16,24 @@ service.interceptors.request.use(config => {
     config.headers['Authorization'] = 'Bearer ' + token;
   }
   return config
-}, 
-error => {
-    console.log(error)
+  }, 
+  error => {
+    ElMessage.error('Oops,'+error.message)
     Promise.reject(error)
-})
+  }
+)
 
 // 响应拦截器
 service.interceptors.response.use(res=>{
     if(res.status==200){
       return res.data
     }else{
-      
+      ElMessage.error('Oops,'+res.msg)
     }
   },
   error=>{
-
+    ElMessage.error('Oops,'+error.message)
   }
 )
-
 
 export default service
