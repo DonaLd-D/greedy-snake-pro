@@ -22,12 +22,10 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 8080,
-    host: true,
     open: true,
     proxy: {
       '/dev-api': {
-        target: 'http://localhost:3030',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/dev-api/, '')
       }

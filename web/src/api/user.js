@@ -22,3 +22,33 @@ export const register=(username,password,password0)=>{
     data:{username,password,password0}
   })
 }
+
+export const addBot=(data)=>{
+  return requst({
+    url:"/user/bot/add",
+    method:"post",
+    data
+  })
+}
+
+export const deleteBot=(data)=>{
+  return requst({
+    url:"/user/bot/delete",
+    method:"post",
+    data
+  })
+}
+
+export const updateBot=(data)=>{
+  return requst({
+    url:"/user/bot/update",
+    method:"post",
+    data
+  })
+}
+
+export const getBots=()=>{
+  return requst({
+    url:"/user/bot/list",
+  })
+}

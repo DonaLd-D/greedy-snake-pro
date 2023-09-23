@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/user/account")
 public class AccountController {
     @Autowired
     LoginService loginService;
@@ -17,18 +18,18 @@ public class AccountController {
     @Autowired
     RegisterService registerService;
 
-    @PostMapping("/user/account/token")
+    @PostMapping("/token")
     public Map<String,String> getToken(@RequestBody Map<String,String> req){
         String username=req.get("username");
         String password=req.get("password");
         return loginService.getToken(username,password);
     }
-    @GetMapping("/user/account/info")
+    @GetMapping("/info")
     public Map<String,String> getInfo(){
         return infoService.getinfo();
     }
 
-    @PostMapping("/user/account/register")
+    @PostMapping("/register")
     public Map<String,String> register(@RequestBody Map<String,String> req){
         return registerService.register(req.get("username"),req.get("password"),req.get("password0"));
     }

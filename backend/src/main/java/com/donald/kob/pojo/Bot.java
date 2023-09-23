@@ -17,11 +17,12 @@ public class Bot {
     private Integer id;
     private Integer userId;
     private String title;
-    private String desc;
+    private String description;
     private String code;
     private Integer rating;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifytime;
+
 }
