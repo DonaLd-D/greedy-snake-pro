@@ -31,11 +31,11 @@ export const addBot=(data)=>{
   })
 }
 
-export const deleteBot=(data)=>{
+export const deleteBot=(id)=>{
   return requst({
     url:"/user/bot/delete",
     method:"post",
-    data
+    data:{id}
   })
 }
 
