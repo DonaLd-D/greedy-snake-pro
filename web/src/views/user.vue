@@ -31,12 +31,19 @@
         <el-input v-model="form.desc" type="textarea" placeholder="请输入描述" :rows="2"/>
       </el-form-item>
       <el-form-item label="代码" prop="code">
-        <!-- <VAceEditor
-          v-model:value="form.code"
-          lang="c_cpp"
-          theme="textmate"
-          style="height: 300px" /> -->
-        <el-input v-model="form.code" type="textarea" placeholder="请输入代码" :rows="3"/>
+        <VAceEditor
+          :value="form.code"
+          class="vue-ace-editor"
+          lang="javascript"
+          theme="github"
+          :options="{
+            useWorker: true,
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true,
+          }"
+        />
+        <!-- <el-input v-model="form.code" type="textarea" placeholder="请输入代码" :rows="3"/> -->
       </el-form-item>
     </el-form>
     <template #footer>
@@ -52,10 +59,8 @@
 
 <script setup>
 import { VAceEditor } from 'vue3-ace-editor';
-import ace from 'ace-builds';
-ace.config.set(
-  "basePath", 
-  "https://cdn.jsdelivr.net/npm/ace-builds@" + ace.version + "/src-noconflict/")
+import "@/utils/ace-config.js"
+
 import { addBot, deleteBot, updateBot, getBots } from '@/api/user.js'
 import useUserStore from "@/store/modules/user.js";
 import { reactive } from 'vue';
@@ -198,5 +203,12 @@ const toUpdate=(id)=>{
     justify-content: space-between;
     align-items: center;
   }
+}
+
+.vue-ace-editor{
+  font-size: 16px;
+  border: 1px solid;
+  flex: 1;
+  height: 300px;
 }
 </style>
