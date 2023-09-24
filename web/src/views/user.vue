@@ -32,10 +32,10 @@
       </el-form-item>
       <el-form-item label="代码" prop="code">
         <VAceEditor
-          :value="form.code"
+          v-model:value="form.code"
           class="vue-ace-editor"
-          lang="javascript"
-          theme="github"
+          lang="java"
+          theme="monokai"
           :options="{
             useWorker: true,
             enableBasicAutocompletion: true,
