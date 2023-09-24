@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <el-dialog v-model="show" :title="isEdit?'编辑bot':'添加bot'" width="35%">
+  <el-dialog v-model="show" :title="isEdit?'编辑bot':'添加bot'" width="35%" draggable :before-close="()=>{show=false;isEdit=false}">
     <el-form :model="form" :rules="rules" label-position="top" ref="myForm">
       <el-form-item label="标题" prop="title">
         <el-input v-model="form.title" placeholder="请输入标题"/>
@@ -48,7 +48,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="show = false">取消</el-button>
+        <el-button @click="show=false;isEdit=false">取消</el-button>
         <el-button type="primary" @click="add">
           确定
         </el-button>
@@ -76,7 +76,6 @@ const getList=()=>{
 getList()
 
 const show=ref(false)
-
 const form = reactive({
   title:"",
   desc:"",
@@ -104,7 +103,6 @@ const add=()=>{
     if (valid) {
       if(isEdit.value){
         toUpdate(update_id.value)
-        isEdit.value=false
         return
       }
       addBot(form).then(res=>{
@@ -163,13 +161,14 @@ const toEdit=(index)=>{
   form.code=code
 }
 
-const toUpdate=(id)=>{
+const toUpdate=async (id)=>{
   const data={id,...form}
-  updateBot(data).then(res=>{
+  await updateBot(data).then(res=>{
     ElMessage({message: res.msg,type: 'success'})
     show.value=false
     getList()
   })
+  isEdit.value=false
 }
 
 </script>
