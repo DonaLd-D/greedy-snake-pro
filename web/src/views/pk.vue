@@ -1,7 +1,8 @@
 <template>
-  <div class="main" ref="parent">
+  <div class="gamemap" ref="parent" v-if="pkStore.status=='playing'">
     <canvas ref="canvas" tabindex="0"/>
   </div>
+  <matching v-if="pkStore.status=='matching'"/>
 </template>
 
 <script setup>
@@ -11,11 +12,14 @@ import usePkStore from '@/store/modules/pk';
 import useUserStore from '@/store/modules/user'
 const pkStore=usePkStore()
 const userStore=useUserStore()
+import matching from './components/matching.vue'
 
 const parent=ref(null)
 const canvas=ref(null)
 onMounted(()=>{
-  new GameMap(parent.value,canvas.value.getContext('2d'))
+  if(pkStore.status=='playing'){
+    new GameMap(parent.value,canvas.value.getContext('2d'))
+  }
   
 })
 
@@ -38,7 +42,7 @@ onUnmounted(()=>{
 </script>
 
 <style lang="less" scoped>
-  .main{
+  .gamemap{
     width: 60vw;
     height: 70vh;
     margin: 2em auto;
