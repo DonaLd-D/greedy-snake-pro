@@ -1,26 +1,21 @@
 <template>
-  <div class="gamemap" ref="parent" v-if="pkStore.status=='playing'">
+  <div class="gamemap" ref="parent" v-show="pkStore.status=='playing'">
     <canvas ref="canvas" tabindex="0"/>
   </div>
-  <matching v-if="pkStore.status=='matching'"/>
+  <matching v-show="pkStore.status=='matching'"/>
 </template>
 
 <script setup>
 import {GameMap} from '@/scripts/gameMap.js'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import usePkStore from '@/store/modules/pk';
-import useUserStore from '@/store/modules/user'
 const pkStore=usePkStore()
-const userStore=useUserStore()
 import matching from './components/matching.vue'
 
 const parent=ref(null)
 const canvas=ref(null)
 onMounted(()=>{
-  if(pkStore.status=='playing'){
-    new GameMap(parent.value,canvas.value.getContext('2d'))
-  }
-  
+  new GameMap(parent.value,canvas.value.getContext('2d'))
 })
 
 const socketUrl=`ws://localhost:8080/websocket/${sessionStorage.getItem("token")}/`
@@ -30,7 +25,13 @@ socket.onopen=()=>{
   pkStore.updateSocket(socket)
 }
 socket.onmessage=msg=>{
-
+  const data=JSON.parse(msg.data)
+  if(data.event=='start'){
+    pkStore.updateOpponent({username:data.opponent_username,avatar:data.opponent_avatar})
+    setTimeout(()=>{
+      pkStore.updateStatus("playing")
+    },1000)
+  }
 }
 socket.onclose=()=>{
   console.log("disconnected!")
@@ -38,6 +39,7 @@ socket.onclose=()=>{
 
 onUnmounted(()=>{
   socket.close()
+  pkStore.updateStatus("matching")
 })
 </script>
 

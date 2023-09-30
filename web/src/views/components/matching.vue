@@ -30,8 +30,10 @@ const status=ref("开始匹配")
 const handle=()=>{
   if(status.value=="开始匹配"){
     status.value="取消"
+    pkStore.socket.send(JSON.stringify({event:'start'}))
   }else{
     status.value="开始匹配"
+    pkStore.socket.send(JSON.stringify({event:'stop'}))
   }
 }
 </script>
