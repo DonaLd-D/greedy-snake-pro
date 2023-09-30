@@ -47,7 +47,7 @@ public class AddServiceImpl implements AddService {
         }
         Date now=new Date();
         Bot bot=new Bot(null,user.getId(),title,desc,code,1500,now,now);
-        System.out.println(bot.toString());
+//        System.out.println(bot.toString());
         botMapper.insert(bot);
         ans.put("msg","添加成功～");
         return ans;

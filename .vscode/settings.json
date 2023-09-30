@@ -1,7 +1,7 @@
 {
   "files.autoSave": "onFocusChange",
   "editor.tabSize": 2,
-  "editor.fontSize": 13,
+  "editor.fontSize": 14,
   "editor.wordWrap": "on",
   "editor.autoIndent": "advanced",
   "editor.detectIndentation": true,

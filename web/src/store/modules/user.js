@@ -6,7 +6,8 @@ const useUserStore = defineStore(
   {
     state: () => ({
       username:"",
-      avatar:""
+      avatar:"",
+      userId:""
     }),
     actions: {
       toLogin(username,password){
@@ -20,6 +21,7 @@ const useUserStore = defineStore(
           console.log("success",res)
           this.username=res.username
           this.avatar=res.avatar
+          this.userId=res.id
         })
       },
       logout(){
