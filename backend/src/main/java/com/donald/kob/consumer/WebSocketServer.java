@@ -1,11 +1,11 @@
 package com.donald.kob.consumer;
 
+import com.donald.kob.consumer.utils.JwtAuthentication;
 import com.donald.kob.mapper.UserMapper;
 import com.donald.kob.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.IIOException;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -26,16 +26,16 @@ public class WebSocketServer {
         WebSocketServer.userMapper=userMapper;
     }
     @OnOpen
-    public void onOpen(Session session, @PathParam("token") String token) {
+    public void onOpen(Session session, @PathParam("token") String token) throws IOException {
         this.session=session;
         System.out.println("connected!");
-        int userId=Integer.parseInt(token);
+        int userId= JwtAuthentication.getId(token);
         this.user=userMapper.selectById(userId);
 
         if(this.user!=null){
             users.put(userId,this);
         }else{
-//            this.session.close();
+            this.session.close();
         }
     }
 

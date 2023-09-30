@@ -19,7 +19,7 @@ onMounted(()=>{
   
 })
 
-const socketUrl=`ws://localhost:8080/websocket/${userStore.userId}/`
+const socketUrl=`ws://localhost:8080/websocket/${sessionStorage.getItem("token")}/`
 const socket=new WebSocket(socketUrl)
 socket.onopen=()=>{
   console.log("connected!")
