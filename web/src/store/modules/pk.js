@@ -19,6 +19,10 @@ const usePkStore = defineStore(
       },
       updateStatus(status){
         this.status=status
+      },
+      updateGamemap(gamemap){
+        this.gamemap=gamemap
+        console.log("gamemap ",gamemap)
       }
       
     }

@@ -14,28 +14,28 @@ import matching from './components/matching.vue'
 
 const parent=ref(null)
 const canvas=ref(null)
-onMounted(()=>{
-  new GameMap(parent.value,canvas.value.getContext('2d'))
-})
-
 const socketUrl=`ws://localhost:8080/websocket/${sessionStorage.getItem("token")}/`
 const socket=new WebSocket(socketUrl)
-socket.onopen=()=>{
-  console.log("connected!")
-  pkStore.updateSocket(socket)
-}
-socket.onmessage=msg=>{
-  const data=JSON.parse(msg.data)
-  if(data.event=='start'){
-    pkStore.updateOpponent({username:data.opponent_username,avatar:data.opponent_avatar})
-    setTimeout(()=>{
-      pkStore.updateStatus("playing")
-    },1000)
+onMounted(()=>{
+  socket.onopen=()=>{
+    console.log("connected!")
+    pkStore.updateSocket(socket)
   }
-}
-socket.onclose=()=>{
-  console.log("disconnected!")
-}
+  socket.onmessage=msg=>{
+    const data=JSON.parse(msg.data)
+    if(data.event=='start'){
+      pkStore.updateOpponent({username:data.opponent_username,avatar:data.opponent_avatar})
+      pkStore.updateGamemap(data.map);
+      new GameMap(parent.value,canvas.value.getContext('2d'),pkStore.gamemap)
+      setTimeout(()=>{
+        pkStore.updateStatus("playing")
+      },1000)
+    }
+  }
+  socket.onclose=()=>{
+    console.log("disconnected!")
+  }
+})
 
 onUnmounted(()=>{
   socket.close()

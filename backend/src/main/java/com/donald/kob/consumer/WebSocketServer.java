@@ -1,6 +1,7 @@
 package com.donald.kob.consumer;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.donald.kob.consumer.utils.Game;
 import com.donald.kob.consumer.utils.JwtAuthentication;
 import com.donald.kob.mapper.UserMapper;
 import com.donald.kob.pojo.User;
@@ -19,8 +20,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/websocket/{token}")  // 注意不要以'/'结尾
 public class WebSocketServer {
 
-    private static ConcurrentHashMap<Integer,WebSocketServer> users=new ConcurrentHashMap<>();
-    private static CopyOnWriteArraySet<User> matchPools=new CopyOnWriteArraySet<>();
+    final private static ConcurrentHashMap<Integer,WebSocketServer> users=new ConcurrentHashMap<>();
+    final private static CopyOnWriteArraySet<User> matchPools=new CopyOnWriteArraySet<>();
     private User user;
     private Session session=null;
     private static UserMapper userMapper;
@@ -53,23 +54,29 @@ public class WebSocketServer {
 
     public void startMatching(){
         matchPools.add(this.user);
-        if(matchPools.size()<2) return;
-        Iterator<User> it=matchPools.iterator();
-        User a=it.next(),b=it.next();
-        matchPools.remove(a);
-        matchPools.remove(b);
+        while(matchPools.size()>1) {
+            Iterator<User> it = matchPools.iterator();
+            User a = it.next(), b = it.next();
+            matchPools.remove(a);
+            matchPools.remove(b);
 
-        JSONObject resA=new JSONObject();
-        resA.put("event","start");
-        resA.put("opponent_username",b.getUsername());
-        resA.put("opponent_avatar",b.getAvatar());
-        users.get(a.getId()).sendMessage(resA.toJSONString());
+            Game game = new Game(13, 13, 20);
+            game.createMap();
 
-        JSONObject resB=new JSONObject();
-        resB.put("event","start");
-        resB.put("opponent_username",a.getUsername());
-        resB.put("opponent_avatar",a.getAvatar());
-        users.get(b.getId()).sendMessage(resB.toJSONString());
+            JSONObject resA = new JSONObject();
+            resA.put("event", "start");
+            resA.put("opponent_username", b.getUsername());
+            resA.put("opponent_avatar", b.getAvatar());
+            resA.put("map", game.getG());
+            users.get(a.getId()).sendMessage(resA.toJSONString());
+
+            JSONObject resB = new JSONObject();
+            resB.put("event", "start");
+            resB.put("opponent_username", a.getUsername());
+            resB.put("opponent_avatar", a.getAvatar());
+            resB.put("map", game.getG());
+            users.get(b.getId()).sendMessage(resB.toJSONString());
+        }
     }
 
     public void stopMatching(){
